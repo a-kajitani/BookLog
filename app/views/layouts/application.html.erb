@@ -8,9 +8,6 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= yield :head %>
-
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
@@ -21,6 +18,17 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+      <nav>
+      <%= link_to 'BookLog', root_path %>
+
+      <% if user_signed_in? %>
+        <%= link_to 'プロフィール編集', edit_user_registration_path %>
+        <%= link_to 'サインアウト', destroy_user_session_path, method: :delete, data: { confirm: 'ログアウトしますか？' } %>
+        <span><%= current_user.email %> さん</span>
+        <%= yield :head %>
+      <% end %>
+    </nav>
   </head>
 
   <body>
@@ -30,6 +38,11 @@
         <% flash.discard(key) %> <!-- 表示後に破棄 -->
       <% end %>
     <% end %>
-    <%= yield %>
+
+    <% if user_signed_in? || devise_controller? %>
+      <%= yield %>
+    <% else %>
+      <%= render 'shared/login_form', resource: User.new, resource_name: :user %>
+    <% end %>
   </body>
 </html>

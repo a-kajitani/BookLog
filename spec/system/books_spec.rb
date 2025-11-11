@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe "本の一覧と詳細", type: :system do
+  let!(:user) { create(:user) }
+  let!(:book) { create(:book, user: user) }
   before do
+      login(user)
       driven_by :headless_chrome
   end
-
-  let!(:user) { User.create(email: "test@example.com", password: "password") }
-  let!(:book) { Book.create(title: "テスト本", author: "名前", user: user) }
 
   it "一覧ページにタイトルが表示されている" do
     visit root_path

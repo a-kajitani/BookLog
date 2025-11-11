@@ -9,8 +9,23 @@
 #   end
 
 User.create!(
+  name: "adminuser",
+  email: "admin@example.com",
+  admin: true,
+  password: "testuser",
+  password_confirmation: "testuser"
+)
+User.create!(
   name: "testuser",
   email: "test@example.com",
+  admin: false,
+  password: "testuser",
+  password_confirmation: "testuser"
+)
+User.create!(
+  name: "testuser2",
+  email: "test2@example.com",
+  admin: false,
   password: "testuser",
   password_confirmation: "testuser"
 )

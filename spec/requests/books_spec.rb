@@ -1,9 +1,11 @@
 
 require 'rails_helper'
 describe 'Books', type: :request do
-  let!(:user) { User.create(email: "test@example.com", password: "password") }
-  let!(:book) { Book.create(title: "テスト本", author: "名前", user: user) }
-
+  let!(:user) { create(:user) }
+  let!(:book) { create(:book, user: user) }
+  before do
+    sign_in user
+  end
   it '本の情報を更新できる' do
     patch book_path(book), params: { book: { title: '新しい題名', author: '新しい名前' } }
     expect(response).to redirect_to(book_path(book))

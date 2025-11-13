@@ -4,7 +4,6 @@ class BooksController < ApplicationController
   end
 
   def create
-    current_user = User.first
     @book = current_user.books.build(book_params)
     if @book.save
       redirect_to root_path, notice: '本を登録しました。'

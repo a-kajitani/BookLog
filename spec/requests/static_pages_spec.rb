@@ -1,6 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe "StaticPages", type: :request do
+RSpec.describe "StaticPages", type: :request do 
+  before do
+    sign_in create(:user)
+  end
   describe "GET /home" do
     it "returns http success" do
       get "/static_pages/home"

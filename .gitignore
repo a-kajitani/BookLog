@@ -1,2 +1,8 @@
-google-chrome-stable_current_amd64.deb
-google-chrome-stable_current_amd64.deb.1
+# .gitignore に追記（既にテンプレに入っていることが多い）
+cat <<'EOF' >> .gitignore
+log/*
+tmp/*
+storage/*
+.env
+EOF
+

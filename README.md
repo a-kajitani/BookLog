@@ -1,24 +1,34 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+h3. モデル設計
 
-Things you may want to cover:
+h4. 1. User
 
-* Ruby version
+* name, email, など
+* has_many :books
+* has_many :comments
 
-* System dependencies
+h4. 2. Book
 
-* Configuration
+* title, author
+* belongs_to :user
+* has_many :sections
 
-* Database creation
+h4. 3. Section（章＋ページをまとめたもの）
 
-* Database initialization
+* title, page_number, content
+* belongs_to :book
+* has_many :comments
 
-* How to run the test suite
+h4. 4. Comment
 
-* Services (job queues, cache servers, search engines, etc.)
+* content
+* belongs_to :user
+* belongs_to :section
 
-* Deployment instructions
+h3. 機能イメージ
 
-* ...
+* ユーザーが本を作成（題名・著者名）
+* 本に章（Section）を追加（ページ番号や内容も含む）
+* 各章に感想（コメント）を投稿
+* ユーザーのページで投稿一覧を表示

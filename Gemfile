@@ -21,7 +21,7 @@ gem "stimulus-rails",  "~> 1.2.1"
 gem "jbuilder",        "~> 2.14.1"
 gem "puma",            ">= 6.0" #変更Puma 5.x が Rack 3.x と互換性がないため
 gem "bootsnap",        "~> 1.16.0", require: false
-gem "sqlite3",         "~> 2.7.4"
+gem "sqlite3",         "~> 2.8.0"
 gem "concurrent-ruby", "~> 1.3.4"
 gem 'rubyzip', '~> 2.3.0'
 gem "mutex_m"

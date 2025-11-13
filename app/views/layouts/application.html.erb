@@ -24,7 +24,8 @@
 
       <% if user_signed_in? %>
         <%= link_to 'プロフィール編集', edit_user_registration_path %>
-        <%= link_to 'サインアウト', destroy_user_session_path, method: :delete, data: { confirm: 'ログアウトしますか？' } %>
+        <%= link_to 'ユーザー一覧', users_path %>
+        <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, data: { confirm: 'ログアウトしますか？' } %>
         <span><%= current_user.email %> さん</span>
         <%= yield :head %>
       <% end %>

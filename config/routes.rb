@@ -1,9 +1,29 @@
 Rails.application.routes.draw do
-  devise_for :users
+  # get "users/index"
+  # get "users/show"
+  # get "users/destroy"
+  # devise_for :users
+  # get "static_pages/home"
+  # get "static_pages/help"
+  # resources :books
+  # root 'static_pages#home'
+  # devise_for :users, controllers: {
+  #   registrations: 'users/registrations'
+  # }
+  # resources :users, only: [:index, :show, :destroy]
+  root 'static_pages#home'
+
   get "static_pages/home"
   get "static_pages/help"
+
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
+
   resources :books
-  root 'static_pages#home'
+  resources :users, only: [:index, :show, :destroy]
+
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

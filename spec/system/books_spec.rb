@@ -22,7 +22,7 @@ RSpec.describe "本の一覧と詳細", type: :system do
   it "編集ページから編集できる" do
     visit root_path
     click_link "テスト本"
-    click_link "編集"
+    click_link "本情報を編集",exact: true
     expect {
         fill_in "題名", with: "新しい題名"
         fill_in "著者", with: "新しい名前"

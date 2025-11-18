@@ -1,0 +1,24 @@
+<h1><%= @book.title %> の章、ページを追加</h1>
+
+<%= form_with(model: [@book, @section], local: true) do |f| %>
+  <% if @section.errors.any? %>
+    <div class="errors">
+      <h2><%= pluralize(@section.errors.count, "error") %> prevented this section from being saved:</h2>
+      <ul>
+        <% @section.errors.full_messages.each do |m| %>
+          <li><%= m %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :content, "章・ページ名" %><br>
+    <%= f.text_field :content%>
+  </div>
+
+  <div class="actions">
+    <%= link_to "キャンセル", @book %>
+    <%= f.submit "追加する" %>
+  </div>
+<% end %>

@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get "sections/new"
+  get "sections/create"
+  get "sections/edit"
+  get "sections/update"
+  get "sections/destroy"
   # get "users/index"
   # get "users/show"
   # get "users/destroy"
@@ -20,8 +25,12 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  resources :books
   resources :users, only: [:index, :show, :destroy]
+  
+  resources :books do
+    resources :sections, only: [:show, :new, :create, :edit, :update, :destroy]
+  end
+
 
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

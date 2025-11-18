@@ -28,6 +28,10 @@ class BooksController < ApplicationController
 
   def destroy
     @book = Book.find(params[:id])
+    unless deletable_by?(current_user, @book)
+      redirect_to @book, alert: "削除権限がありません。"
+      return
+    end
     @book.destroy
     redirect_to root_path, notice: "本を削除しました。"
   end
@@ -42,5 +46,10 @@ class BooksController < ApplicationController
 
   def book_params
     params.require(:book).permit(:title, :author)
+  end
+   # 管理者（admin）と作成者のみ削除可
+  def deletable_by?(user, book)
+    return true if user&.respond_to?(:admin?) && user.admin?
+    book.user_id == user&.id
   end
 end

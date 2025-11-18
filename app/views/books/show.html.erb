@@ -1,4 +1,18 @@
 
 <h1><%= @book.title %></h1>
 <p>著者: <%= @book.author %></p>
-<%= link_to '編集', edit_book_path(@book), class: "btn btn-primary" %>
+<%= link_to '本情報を編集', edit_book_path(@book), class: "btn btn-primary" %>
+
+<p>
+  <%= link_to "章を追加", new_book_section_path(@book), class: "btn" %>
+</p>
+
+<h2>章一覧</h2>
+<ol id="sections_list">
+  <% @book.sections.ordered.each do |section| %>
+    <li>
+      <%= link_to section.content.presence || "無題の章", book_section_path(@book, section) %>
+      <small>作成: <%= section.user.try(:name) || "不明" %> / <%= l section.created_at, format: :short %></small>
+    </li>
+  <% end %>
+</ol>

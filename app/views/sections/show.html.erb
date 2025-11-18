@@ -1,0 +1,16 @@
+<h1><%= @book.title %>　<%= @section.content %></h1>
+
+<p><strong>章、ページ名：</strong><%= @section.content.presence || "無題の章" %></p>
+
+
+<p>
+  作成者: <%= @section.user.try(:name) || "不明" %><br>
+  作成日時: <%= l @section.created_at, format: :short %>
+</p>
+
+<hr>
+
+<div class="actions">
+  <%= link_to "章・ページ名編集", edit_book_section_path(@book, @section) %>
+  <%= link_to "本に戻る", @book %>
+</div>

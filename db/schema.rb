@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_13_053145) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_17_004106) do
   create_table "books", force: :cascade do |t|
     t.string "author"
     t.datetime "created_at", null: false
@@ -18,6 +18,19 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_13_053145) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.index ["user_id"], name: "index_books_on_user_id"
+  end
+
+  create_table "sections", force: :cascade do |t|
+    t.integer "book_id", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.integer "position"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["book_id", "created_at"], name: "index_sections_on_book_id_and_created_at"
+    t.index ["book_id", "position"], name: "index_sections_on_book_id_and_position"
+    t.index ["book_id"], name: "index_sections_on_book_id"
+    t.index ["user_id"], name: "index_sections_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -35,4 +48,6 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_13_053145) do
   end
 
   add_foreign_key "books", "users", on_delete: :nullify
+  add_foreign_key "sections", "books"
+  add_foreign_key "sections", "users"
 end

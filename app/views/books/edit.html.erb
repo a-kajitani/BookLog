@@ -21,12 +21,18 @@
   </div>
 
   <div class="actions">
+    <%= link_to "キャンセル", @book %>
     <%= form.submit "更新", class: "btn btn-primary" %>
   </div>
 <% end %>
-
-<hr>
-
-<div class="actions">
-  <%= button_to'本を削除する', book_path(@book), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
-</div>
+<% if current_user &&
+          (current_user.respond_to?(:admin?) && current_user.admin? ||
+          @book.user_id == current_user.id) %>
+  <hr>
+  <div class="actions">
+    <%= link_to "本を削除する",
+              book_path(@book),
+              data: { turbo_method: :delete, turbo_confirm: "削除すると関連する情報もすべて失われます。本当に削除してよろしいですか？" },
+              class: "btn btn-danger" %>
+  </div>
+<% end %>

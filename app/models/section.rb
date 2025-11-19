@@ -1,7 +1,7 @@
 class Section < ApplicationRecord
   belongs_to :book
   belongs_to :user
-
+  has_many :impressions, dependent: :destroy
   validates :content, presence: true, length: { maximum: 20_000 }
 
   

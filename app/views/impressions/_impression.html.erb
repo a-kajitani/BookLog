@@ -1,0 +1,28 @@
+<article class="card mb-2" data-testid="impression-item">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-start">
+      <div class="text-muted small">
+        <%= impression.user&.name || "退会ユーザー" %> ・
+        <%= l impression.created_at, format: :short %>
+         <% if current_user&.admin? || current_user&.id == impression.user_id %>
+        
+          <%= link_to "編集",
+                      edit_book_section_impression_path(impression.section.book, impression.section, impression),
+                      class: "btn btn-outline-secondary" %>
+          <%= link_to "削除",
+                      book_section_impression_path(impression.section.book, impression.section, impression),
+                      data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
+                      class: "btn btn-outline-danger" %>
+        
+      <% end %>
+      </div>
+
+     
+    </div>
+
+    <div class="mt-2">
+      <%= simple_format(h(impression.body)) %>
+    </div>
+  </div>
+</article>
+

@@ -1,0 +1,21 @@
+<h2>感想を編集</h2>
+<p class="text-muted">
+  章：<%= truncate(@section.content.to_s, length: 40) %> ／ 本：<%= @section.book.title %>
+</p>
+
+<%= form_with model: @impression,
+              url: book_section_impression_path(@section.book, @section, @impression),
+              method: :patch do |f| %>
+  <div class="mb-2">
+    <%= f.label :body, "感想", class: "form-label" %>
+    <%= f.text_area :body, rows: 6, class: "form-control" %>
+    <% if @impression.errors[:body].any? %>
+      <div class="text-danger small"><%= @impression.errors.full_messages_for(:body).join(", ") %></div>
+    <% end %>
+  </div>
+
+  <div class="d-flex gap-2">
+    <%= f.submit "更新する", class: "btn btn-primary" %>
+    <%= link_to "章へ戻る", [@section.book, @section], class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>

@@ -8,9 +8,25 @@
   作成日時: <%= l @section.created_at, format: :short %>
 </p>
 
-<hr>
 
 <div class="actions">
   <%= link_to "章・ページ名編集", edit_book_section_path(@book, @section) %>
   <%= link_to "本に戻る", @book %>
 </div>
+
+<!-- app/views/sections/show.html.erb の「感想」セクションをリンクだけに -->
+<section id="impressions">
+  <h2>感想</h2>
+
+  <% if current_user %>
+    <%= link_to "感想を投稿する",
+                new_book_section_impression_path(@section.book, @section),
+                class: "btn btn-primary",
+                data: { testid: "link-to-new-impression" } %>
+  <% else %>
+    <p class="text-muted">感想を投稿するにはログインしてください。</p>
+  <% end %>
+
+  <div id="impressions-list">
+    <%= render @section.impressions.order(created_at: :desc) %>
+  </div>

@@ -8,6 +8,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
@@ -18,21 +19,33 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-
-      <nav>
-      <%= link_to 'BookLog', root_path %>
-
-      <% if user_signed_in? %>
-        <%= link_to 'プロフィール編集', edit_user_registration_path %>
-        <%= link_to 'ユーザー一覧', users_path %>
-        <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, data: { confirm: 'ログアウトしますか？' } %>
-        <span><%= current_user.email %> さん</span>
-        <%= yield :head %>
-      <% end %>
-    </nav>
   </head>
 
-  <body>
+  <body class="d-flex flex-column min-vh-100">
+    <header>
+      <nav class="navbar bg-body-tertiary " data-bs-theme="dark">
+        <div class="container-fluid">        
+            <%= link_to 'BookLog', root_path, class: 'navbar-brand' %>
+            <% if user_signed_in? %>
+              <div class="d-flex align-items-center ms-auto">
+                <span class="navbar-text me-2"><%= current_user.name %> さん</span>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                  <%= link_to 'ユーザー一覧', users_path, class:"nav-link" %>
+                  <%= link_to 'プロフィール編集', edit_user_registration_path, class:"nav-link" %>
+                  <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, data: { confirm: 'ログアウトしますか？' }, class:"nav-link" %>
+                  <%= yield :head %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </nav>
+    </header>
     <% flash.each do |key, message| %>
       <% if message.present? %>
         <div class="flash <%= key %>"><p style="color: green;"><%= message %></p></div>
@@ -45,5 +58,6 @@
     <% else %>
       <%= render 'shared/login_form', resource: User.new, resource_name: :user %>
     <% end %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
   </body>
 </html>

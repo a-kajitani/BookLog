@@ -56,6 +56,7 @@ end
 
 group :production do
   gem "solid_queue"
+  gem "solid_cache"
   gem "pg", "~> 1.3.5"
   gem "aws-sdk-s3", "~> 1.114.0", require: false
 end

@@ -1,9 +1,24 @@
-<h1>本一覧が出るはず</h1>
-<h2>本の追加</h2>
-<%= link_to '本を追加する', new_book_path, class: 'btn btn-primary'%>
-
-<ul>
-  <% @books.each do |book| %>
-    <li><%= link_to book.title ,book_path(book)%></li>
-  <% end %>
-</ul>
+<main class="flex-grow-1 d-flex justify-content-center ">
+  <div class="card p-5" style="width: 100%; max-width: 85%;">
+   <div class=" d-flex align-items-center mx-auto">
+      <h1 class="me-2">書籍一覧</h1>
+      <%= link_to new_book_path, class: "btn btn-primary d-flex align-items-center btn-sm me-3" do %>
+        <i class="bi bi-plus-lg"></i>
+        書籍を追加する
+      <% end %>
+    </div><br><br>  
+    <div class="row  g-3">
+      <% @books.each do |book| %>
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5><%= link_to book.title, book_path(book) %></h5><br>
+              <p>著者: <%= book.author %></p>
+              <p>作成: <%= book.user.try(:name) || "削除済ユーザー" %> / <%= l book.created_at, format: :short %></p>   
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</main>

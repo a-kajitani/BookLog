@@ -1,25 +1,37 @@
-<h1>章を編集</h1>
+<main class="flex-grow-1 d-flex justify-content-center ">
+  <div class="card p-5" style="width: 100%; max-width: 85%;">
+    <div class=" d-flex align-items-center mx-auto">
+      <h1 class="h1 mb-2 me-2">章を編集</h1>
+      <% if current_user &&
+              (current_user.respond_to?(:admin?) && current_user.admin? ||
+              @section.user_id == current_user.id) %>
+        <div class="actions">
+          <%= link_to "章・ページを削除する",
+                  book_section_path(@book, @section),
+                  data: { turbo_method: :delete, turbo_confirm: "削除すると関連する情報もすべて失われます。本当に削除しますか？" },
+                  class: "btn btn-danger btn-sm me-3" %>
+        </div>
+      <% end %>
+    </div><br>
+    <div class="d-flex justify-content-center ">
+      <%= form_with(model: [@book, @section], local: true,  html: {class: "flex-fill" }) do |f| %>
+        <div class="field w-50 mx-auto">
+          <div class="d-flex">
+            <i class="bi bi-bookmark-fill"></i>
+            <%= f.label :content, "章・ページ名" %><br>
+          </div>
+          <%= f.text_field :content, autocomplete: "content", class:"form-control"%>
+          <% if @section.errors[:content].any? %>
+            <div class="text-danger small"><%= @section.errors.full_messages_for(:content).join(", ") %></div>
+          <% end %>     
+        </div>
+        <br><br>
 
-<%= form_with(model: [@book, @section], local: true) do |f| %>
-  <div class="field">
-    <%= f.label :content, "章・ページ名" %><br>
-    <%= f.text_field :content%>
-  </div>
-
-  <div class="actions">
-    <%= link_to "キャンセル", book_section_path(@section.book, @section)%>
-    <%= f.submit "更新する" %>
-  </div>
-  
-  <% if current_user &&
-          (current_user.respond_to?(:admin?) && current_user.admin? ||
-          @section.user_id == current_user.id) %>
-    <hr>
-    <div class="actions">
-      <%= link_to "章・ページを削除する",
-              book_section_path(@book, @section),
-              data: { turbo_method: :delete, turbo_confirm: "削除すると関連する情報もすべて失われます。本当に削除しますか？" },
-              class: "btn btn-danger" %>
+        <div class="actions actions w-50 mx-auto d-flex justify-content-center gap-2">
+          <%= link_to "キャンセル", @book , class: "btn btn-secondary w-25"%>
+          <%= f.submit "更新する" ,class: "btn btn-primary w-25"%>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-<% end %>
+  </div>
+</main>

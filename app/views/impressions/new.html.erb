@@ -1,22 +1,32 @@
-<!-- app/views/impressions/new.html.erb -->
-<h2>感想を投稿</h2>
-<p class="text-muted">
-  章：<%= @section.content %> ／ 本：<%= @section.book.title %>
-</p>
-
-<%= form_with(model: @impression,
-              url: book_section_impressions_path(@section.book, @section),
-              data: { testid: "impression-form" }) do |f| %>
-  <div class="mb-2">
-    <%= f.label :body, "感想", class: "form-label" %>
-    <%= f.text_area :body, rows: 6, class: "form-control", placeholder: "この章を読んで感じたこと…" %>
-    <% if @impression.errors[:body].any? %>
-      <div class="text-danger small"><%= @impression.errors.full_messages_for(:body).join(", ") %></div>
-    <% end %>
-  </div>
-
-  <div class="d-flex gap-2">
-    <%= f.submit "投稿する", class: "btn btn-primary" %>
-    <%= link_to "章へ戻る", [@section.book, @section], class: "btn btn-outline-secondary" %>
-  </div>
-<% end %>
+<main class="flex-grow-1 d-flex justify-content-center ">
+  <div class="card p-5" style="width: 100%; max-width: 85%;">
+    <div class=" mx-auto">
+      <!-- app/views/impressions/new.html.erb -->
+      <h2>感想を投稿</h2>
+      <p class="text-muted">
+        章：<%= @section.content %> ／ 本：<%= @section.book.title %>
+      </p>
+    </div>
+     <div class="d-flex justify-content-center ">
+        <%= form_with(model: @impression,
+                      url: book_section_impressions_path(@section.book, @section),
+                      data: { testid: "impression-form" },html: {class: "flex-fill" }) do |f| %>
+          <div class="field w-75 mx-auto">
+            <div class="d-flex">
+              <i class="bi bi-pencil-fill"></i>
+              <%= f.label :body, "感想", class: "form-label" %>
+            </div>
+            <%= f.text_area :body, rows: 13, class: "form-control", placeholder: "この章を読んで感じたこと…" %>
+            <% if @impression.errors[:body].any? %>
+              <div class="text-danger small"><%= @impression.errors.full_messages_for(:body).join(", ") %></div>
+            <% end %>
+          </div>
+          <br>
+          <div class="actions actions w-50 mx-auto d-flex justify-content-center gap-2">
+            <%= link_to "キャンセル", [@section.book, @section], class: "btn btn-secondary  w-25" %>
+            <%= f.submit "投稿する", class: "btn btn-primary  w-25" %>            
+          </div>
+        <% end %>
+      </div>
+    </div>
+</main>

@@ -1,18 +1,33 @@
-
-<h1><%= @book.title %></h1>
-<p>著者: <%= @book.author %></p>
-<%= link_to '本情報を編集', edit_book_path(@book), class: "btn btn-primary" %>
-
-<p>
-  <%= link_to "章を追加", new_book_section_path(@book), class: "btn" %>
-</p>
-
-<h2>章一覧</h2>
-<ol id="sections_list">
-  <% @book.sections.ordered.each do |section| %>
-    <li>
-      <%= link_to section.content.presence || "無題の章", book_section_path(@book, section) %>
-      <small>作成: <%= section.user.try(:name) || "不明" %> / <%= l section.created_at, format: :short %></small>
-    </li>
-  <% end %>
-</ol>
+<main class="flex-grow-1 d-flex justify-content-center ">
+  <div class="card p-5" style="width: 100%; max-width: 85%;">
+    <div class=" d-flex align-items-center mx-auto">
+      <h1 class="me-2 book-title"><%= @book.title %></h1>
+      <%= link_to edit_book_path(@book), class: "btn btn-primary d-flex align-items-center btn-sm me-3" do %>
+        <i class="bi bi-pencil-fill"></i>
+        書籍情報の編集
+      <% end %>
+    </div>
+    <div class=" d-flex align-items-center mx-auto"> 
+      <p>著者: <%= @book.author %></p>
+    </div>
+     <div class="d-flex align-items-center">
+      <h2 class="me-2">章一覧</h2>    
+      <%= link_to new_book_section_path(@book), class: "btn btn-primary btn-sm d-inline-flex align-items-center gap-1" do %>
+        <i class="bi bi-plus-lg"></i>
+        章を追加
+      <% end %>
+    </div><br>
+    <div class="row  g-3">
+      <% @book.sections.ordered.each do |section| %>
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5><%= link_to section.content.presence || "無題の章", book_section_path(@book, section) %></h5>
+              <p>作成: <%= section.user.try(:name) || "削除済ユーザー" %> / <%= l section.created_at, format: :short %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</main>

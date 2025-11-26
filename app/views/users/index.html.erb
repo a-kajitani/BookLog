@@ -1,34 +1,38 @@
-<h1>ユーザー一覧</h1>
+<main class="flex-grow-1 d-flex justify-content-center ">
+  <div class="card p-5" style="width: 100%; max-width: 85%;">
+    <h1>ユーザー一覧</h1>
 
-<!-- 自分のアカウントへのリンクをページ上部に表示 -->
-<div style="margin-bottom: 20px;">
-  <strong>あなたのアカウント:</strong>
-  <%= link_to current_user.name, user_path(current_user), class: 'btn btn-outline-primary' %>
-</div>
+    <!-- 自分のアカウントへのリンクをページ上部に表示 -->
+    <div style="margin-bottom: 20px;">
+      <strong>あなたのアカウント:</strong>
+      <%= link_to current_user.name, user_path(current_user), class: 'btn btn-outline-primary' %>
+    </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>名前</th>
-      <th>メールアドレス</th>
-      <% if current_user.admin? %>
-        <th>操作</th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= link_to user.name, user_path(user) %></td>
-        <td><%= user.email %></td>
-        <% if current_user.admin? %>
-          <td>
-            <% unless user == current_user %>
-              <%= link_to '削除', user_path(user), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+    <table>
+      <thead>
+        <tr>
+          <th>名前</th>
+          <th>メールアドレス</th>
+          <% if current_user.admin? %>
+            <th>操作</th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= link_to user.name, user_path(user) %></td>
+            <td><%= user.email %></td>
+            <% if current_user.admin? %>
+              <td>
+                <% unless user == current_user %>
+                  <%= link_to '削除', user_path(user), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+                <% end %>
+              </td>
             <% end %>
-          </td>
+          </tr>
         <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      </tbody>
+    </table>
+  </div>
+</main>

@@ -5,4 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :books, dependent: :nullify
   has_many :impressions, dependent: :nullify
+  # Validations
+  validates :name, presence: true
 end

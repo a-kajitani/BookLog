@@ -4,25 +4,33 @@
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="field">
         <%= f.label :email, "メールアドレス"%><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        <div class="input-group has-validation">
+          <span class="input-group-text"><i class="bi bi-at"></i></span>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control"%>
+        </div>
       </div>
+
 
       <div class="field">
         <%= f.label :password, "パスワード"%><br />
-        <%= f.password_field :password, autocomplete: "current-password" %>
+          <div class="input-group has-validation">
+            <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+            <%= f.password_field :password, autocomplete: "current-password", class:"form-control"%>
+          </div>
       </div>
 
       <% if devise_mapping.rememberable? %>
+        <br>
         <div class="field">
           <%= f.check_box :remember_me%>
           <%= f.label :remember_me , "ログイン状態を保存"%>
         </div>
       <% end %>
-
       <div class="actions">
-        <%= f.submit "ログイン" %>
+        <%= f.submit "ログイン", class:"btn btn-primary w-100"%>
       </div>
     <% end %>
+    <br>
     <%= render "devise/shared/links" %>
   </div>
 </main>

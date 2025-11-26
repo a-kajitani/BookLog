@@ -3,3 +3,13 @@
   font-size: 23px;
   font-weight: bold;
 }
+
+
+.book-title {
+  display: inline-block;       /* h1が横幅を持てるように */
+  max-width: 30ch;             /* ← 任意の文字数に調整 */
+  white-space: normal;         /* 折り返しを許可 */
+  overflow-wrap: anywhere; 
+
+}
+

@@ -21,16 +21,18 @@ gem "stimulus-rails",  "~> 1.2.1"
 gem "jbuilder",        "~> 2.14.1"
 gem "puma",            ">= 6.0" #変更Puma 5.x が Rack 3.x と互換性がないため
 gem "bootsnap",        "~> 1.16.0", require: false
-gem "sqlite3",         "~> 2.7.4"
 gem "concurrent-ruby", "~> 1.3.4"
 gem 'rubyzip', '~> 2.3.0'
 gem "mutex_m"
+gem "rails-i18n"
+gem "devise-i18n"
 
 group :development, :test do
   gem 'reline', '~> 0.5.10'
   gem "debug",   "~> 1.7.1", platforms: %i[ mri mingw x64_mingw ]
   #拡張課題＿RSpecを使ってみる
   gem 'rspec-rails', '~> 6.0.0' # RSpec本体
+  gem "sqlite3",         "~> 2.7.4"
 end
 
 group :development do

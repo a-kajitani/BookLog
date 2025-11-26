@@ -55,6 +55,7 @@ group :test do
 end
 
 group :production do
+  gem "solid_queue"
   gem "pg", "~> 1.3.5"
   gem "aws-sdk-s3", "~> 1.114.0", require: false
 end

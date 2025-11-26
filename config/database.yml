@@ -21,5 +21,18 @@ test:
   database: storage/test.sqlite3
 
 # 本番は Render の環境変数 DATABASE_URL（PostgreSQL）を使う
+
 production:
-  url: <%= ENV["DATABASE_URL"] %>
+  primary:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
+
+  #   primary と同じ接続に向けて起動させる（後で削除してOK）
+  cache:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
+
+# ★ Action Cable（solid_cable）を使うなら、cable ロールも primary に寄せる
+  cable:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>

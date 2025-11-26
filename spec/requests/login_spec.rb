@@ -22,6 +22,6 @@ RSpec.describe 'ログインAPI', type: :request do
       }
     }
 
-    expect(response.body).to include('Invalid Email or password.')
+    expect(response.body).to include('Eメールまたはパスワードが違います。')
   end
 end

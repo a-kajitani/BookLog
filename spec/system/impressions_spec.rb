@@ -19,7 +19,7 @@ RSpec.describe "本の一覧と詳細", type: :system do
       visit root_path
       click_link "テスト本"
       click_link "テスト用の章"
-      click_link "感想を投稿する"
+      click_link "感想を投稿"
       fill_in "感想", with: "追加した感想"
       click_button "投稿する"
       expect(page).to have_content "追加した感想"

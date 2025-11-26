@@ -1,24 +1,30 @@
-<h1><%= @book.title %> の章、ページを追加</h1>
-
-<%= form_with(model: [@book, @section], local: true) do |f| %>
-  <% if @section.errors.any? %>
-    <div class="errors">
-      <h2><%= pluralize(@section.errors.count, "error") %> prevented this section from being saved:</h2>
-      <ul>
-        <% @section.errors.full_messages.each do |m| %>
-          <li><%= m %></li>
-        <% end %>
-      </ul>
+<main class="flex-grow-1 d-flex justify-content-center ">
+  <div class="card p-5" style="width: 100%; max-width: 85%;">
+    <div class="align-items-center mx-auto">
+      <h1>章・ページ追加</h1>
+        <p class="text-muted text-center">
+          本：<%= @section.book.title %>
+        </p>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :content, "章・ページ名" %><br>
-    <%= f.text_field :content%>
+    <br><br>
+   <div class="d-flex justify-content-center ">
+      <%= form_with(model: [@book, @section], local: true, html: {class: "flex-fill" }) do |f| %>
+        <div class="field w-50 mx-auto">
+          <div  class= "d-flex">
+          <i class="bi bi-bookmark-fill"></i>    
+          <%= f.label :content, "章・ページ名" %><br>
+          </div>            
+          <%= f.text_field :content, autocomplete: "content", class:"form-control"%>  
+            <% if @section.errors[:content].any? %>
+            <div class="text-danger small"><%= @section.errors.full_messages_for(:content).join(", ") %></div>
+          <% end %>
+        </div>
+        <br><br>
+        <div class="actions actions w-50 mx-auto d-flex justify-content-center gap-2">
+          <%= link_to "キャンセル", @book , class: "btn btn-secondary w-25"%>
+          <%= f.submit "追加する" ,class: "btn btn-primary w-25"%>
+        </div>
+      <% end %>
+    </div>
   </div>
-
-  <div class="actions">
-    <%= link_to "キャンセル", @book %>
-    <%= f.submit "追加する" %>
-  </div>
-<% end %>
+</main>

@@ -8,24 +8,25 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-User.create!(
-  name: "adminuser",
-  email: "admin@example.com",
-  admin: true,
-  password: "testuser",
-  password_confirmation: "testuser"
-)
-User.create!(
-  name: "testuser",
-  email: "test@example.com",
-  admin: false,
-  password: "testuser",
-  password_confirmation: "testuser"
-)
-User.create!(
-  name: "testuser2",
-  email: "test2@example.com",
-  admin: false,
-  password: "testuser",
-  password_confirmation: "testuser"
-)
+# db/seeds.rb
+def upsert_user!(email:, name:, admin:, password:)
+  user = User.find_or_initialize_by(email: email)
+  user.name = name
+  user.admin = admin
+  user.password = password
+  user.password_confirmation = password
+  user.save!
+  puts "Upserted: #{email}"
+end
+
+# Admin（本番・開発共通）
+admin_email    = ENV.fetch("ADMIN_EMAIL", "admin@example.com")
+admin_password = ENV.fetch("ADMIN_PASSWORD", "testuser")
+upsert_user!(email: admin_email, name: "adminuser", admin: true, password: admin_password)
+
+# 開発専用テストユーザー
+if Rails.env.development?
+  dev_pw = ENV.fetch("DEV_USER_PASSWORD", "testuser")
+  upsert_user!(email: "test@example.com",  name: "testuser",  admin: false, password: dev_pw)
+  upsert_user!(email: "test2@example.com", name: "testuser2", admin: false, password: dev_pw)
+end

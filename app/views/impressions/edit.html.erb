@@ -1,3 +1,12 @@
+
+<%# パンくず（1回だけ） %>
+<% if params[:from] == "user" %>
+  <% breadcrumb :impression_edit_from_user, @impression %>
+<% else %>
+  <% breadcrumb :impression_edit_from_section, @impression %>
+<% end %>
+
+
 <main class="flex-grow-1 d-flex justify-content-center ">
   <div class="card p-5" style="width: 100%; max-width: 85%;">
     <div class=" mx-auto">
@@ -10,6 +19,7 @@
       <%= form_with model: @impression,
                     url: book_section_impression_path(@section.book, @section, @impression),
                     method: :patch, html: {class: "flex-fill  d-flex flex-column h-100 " } do |f| %>
+        <%= hidden_field_tag :return_to, params[:return_to] %>
         <div class="field w-75 mx-auto">
           <div class="d-flex">
             <i class="bi bi-pencil-fill"></i>
@@ -22,7 +32,14 @@
         </div>
         <br>
         <div class="actions actions w-50 mx-auto d-flex justify-content-center gap-2">
-          <%= link_to "キャンセル", [@section.book, @section], class: "btn btn-secondary  w-25" %>
+           <%# キャンセルも return_to があればそちらへ。なければ章ページへ %>
+          <% cancel_path =
+              if params[:return_to].present?
+                params[:return_to]
+              else
+                polymorphic_path([@section.book, @section])
+              end %>
+          <%= link_to "キャンセル", cancel_path, class: "btn btn-secondary  w-25" %>
           <%= f.submit "更新する", class: "btn btn-primary  w-25" %>            
         </div>
       <% end %>

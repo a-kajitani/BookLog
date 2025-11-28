@@ -24,6 +24,7 @@ gem "bootsnap",        "~> 1.16.0", require: false
 gem "concurrent-ruby", "~> 1.3.4"
 gem 'rubyzip', '~> 2.3.0'
 gem "mutex_m"
+gem 'gretel'
 gem "rails-i18n"
 gem "devise-i18n"
 

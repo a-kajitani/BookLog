@@ -1,0 +1,15 @@
+
+<!-- app/views/shared/_breadcrumbs.html.erb -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <% items.each_with_index do |item, idx| %>
+      <% is_last = (idx == items.size - 1) %>
+      <li class="breadcrumb-item <%= 'active' if is_last %>" <%= 'aria-current="page"' if is_last %>>
+        <% if is_last || item[:url].blank? %>
+          <%= item[:name] %>
+        <% else %>
+          <%= link_to item[:name], item[:url] %>
+        <% end %>
+      </li>
+    <% end %>
+  </ol>

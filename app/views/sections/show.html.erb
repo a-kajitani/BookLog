@@ -1,3 +1,4 @@
+<% breadcrumb :section, @section %>
 <main class="flex-grow-1 d-flex justify-content-center ">
   <div class="card p-5" style="width: 100%; max-width: 85%;">
   <div class=" d-flex align-items-center mx-auto">
@@ -25,7 +26,6 @@
     <section id="impressions">
     <div class="d-flex align-items-center w-75 mx-auto">
       <h2 class="me-2">感想</h2>
-       <%= link_to "本に戻る", @book , class: "btn btn-secondary d-flex align-items-center btn-sm me-2"%>
       <% if current_user %>
         <%= link_to new_book_section_impression_path(@section.book, @section),
                     class: "btn btn-primary align-items-center btn-sm me-3",

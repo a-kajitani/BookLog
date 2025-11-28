@@ -61,7 +61,11 @@
       <% end %>
     <% end %>
 
-    <% if user_signed_in? || devise_controller? %>
+    <% if user_signed_in? || devise_controller? %>    
+      <nav class="breadcrumbs">
+          <%= breadcrumbs separator: " › " %>
+      </nav>
+
       <%= yield %>
     <% else %>
       <%= render 'shared/login_form', resource: User.new, resource_name: :user %>

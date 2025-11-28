@@ -1,3 +1,13 @@
+<% if params[:from] == "user" && params[:user_id].present? %>
+  <% origin_user = User.find_by(id: params[:user_id]) %>
+  <% if origin_user %>
+    <% breadcrumb :book_from_user, [@book, origin_user] %>
+  <% else %>
+    <% breadcrumb :book_from_default, @book %>
+  <% end %>
+<% else %>
+  <% breadcrumb :book_from_default, @book %>
+<% end %>
 <main class="flex-grow-1 d-flex justify-content-center ">
   <div class="card p-5" style="width: 100%; max-width: 85%;">
     <div class=" d-flex align-items-center mx-auto">

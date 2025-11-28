@@ -8,7 +8,11 @@ before_action :authorize_deletion, only: [:destroy]
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.find(params[:id]) 
+    # 章→本までプリロードして N+1 を防ぐ
+    @impressions = @user.impressions
+                        .includes(section: :book)
+                        .order(created_at: :desc)
   end
 
   def destroy

@@ -27,8 +27,14 @@ class ImpressionsController < ApplicationController
 
 
   def update
-    if @impression.update(impression_params)
-      redirect_to [@section.book, @section], notice: "感想を更新しました。"
+    # if @impression.update(impression_params)
+    #   redirect_to [@section.book, @section], notice: "感想を更新しました。"
+    # else
+    #   flash.now[:alert] = "感想の更新に失敗しました。"
+    # end 
+    if @impression.update(impression_params)  
+      redirect_target = params[:return_to].presence || polymorphic_path([@section.book, @section])
+      redirect_to redirect_target, notice: "感想を更新しました。"
     else
       flash.now[:alert] = "感想の更新に失敗しました。"
       render :edit, status: :unprocessable_entity
@@ -56,6 +62,15 @@ class ImpressionsController < ApplicationController
     def impression_params
       params.require(:impression).permit(:body)
     end
+    
+  # 許可した戻り先のみ通す（例：ユーザーページ）
+  def safe_return_path
+    raw = params[:return_to].to_s
+    return nil if raw.blank?
+
+    # ユーザーページのみ許可する
+    user_path(@impression.user) == raw ? raw : nil
+  end
 
     def require_login
       if current_user.nil?

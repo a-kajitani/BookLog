@@ -1,2 +1,51 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<% breadcrumb :user, @user %>
+<main class="flex-grow-1 d-flex justify-content-center ">
+  <div class="card p-5" style="width: 100%; max-width: 85%;">
+    <div class=" d-flex align-items-center mx-auto">
+      <h1><%= @user.name %> さんのページ</h1>
+    </div><br><br>
+  <div class="d-flex align-items-center w-75 mx-auto">
+    <h2>投稿した感想一覧</h2>
+  </div>
+      
+    <% if @impressions.any? %>
+      <% @impressions.each do |impression| %>
+        <article class="card mb-2 w-75 mx-auto" data-testid="impression-item">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+            <% section = impression.section %>
+            <% book = section&.book %>
+              <div class="d-flex" >                 
+                <div class="impression-item">
+                  <div class="meta">
+                    <%# Section の章タイトル相当のカラムに合わせて以下を確定してください %>
+                    <strong>
+                      <%= section&.try(:name) || section&.try(:content) || "章なし" %>
+                    </strong>
+                    <% if book %>
+                      （<%= link_to(book.try(:title) || "本情報なし", book_path(book,from: "user", user_id: @user.id, return_to: user_path(@user))) %>）
+                    <% end %>
+                  </div>    
+                </div>           
+                <small class="me-2">投稿日: <%= l(impression.created_at, format: :short) %></small>
+                <% if current_user&.admin? || current_user&.id == impression.user_id %>
+                  <%= link_to "編集",
+                              edit_book_section_impression_path(impression.section.book, impression.section, impression,from:"user", return_to: user_path(impression.user)),
+                              class: "btn btn-outline-primary btn-sm me-2" %>
+                  <%= link_to "削除",
+                              book_section_impression_path(impression.section.book, impression.section, impression),
+                              data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
+                              class: "btn btn-outline-danger btn-sm" %>             
+                <% end %>
+              </div>            
+            </div>
+          <div class="content mt-2">
+                <%= simple_format(impression.body) %>
+          </div>
+        </article>   
+      <% end %>          
+      <% else %>
+        <p>まだ感想はありません。</p>
+    <% end %>
+  </div>
+</main>

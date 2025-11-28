@@ -1,3 +1,4 @@
+<% breadcrumb :user_settings %> 
 <main class="flex-grow-1 d-flex justify-content-center ">
   <div class="card p-5" style="width: 100%; max-width: 85%;">
     <div class=" d-flex align-items-center mx-auto">
@@ -49,9 +50,10 @@
       <div class="field w-50 mx-auto">
         <div  class= "d-flex">
           <i class="bi bi-lock-fill"></i>
-          <%= f.label :password_confirmation, "パスワード(確認用)"%><br />   
+          <%= f.label :password_confirmation, "パスワード(確認用)"%><br />
+          </div>   
           <%= f.password_field :password_confirmation, autocomplete: "new-password" , class:"form-control"%>
-        </div>
+        
         <% if f.object.errors[:password_confirmation].any? %>
               <div class="text-danger small"><%= f.object.errors.full_messages_for(:password_confirmation).join(", ") %></div>
         <% end %>
@@ -61,8 +63,9 @@
           <div  class= "d-flex">
             <i class="bi bi-lock"></i>
             <%= f.label :current_password, "現在のパスワード(入力必須)" %><br />  
-            <%= f.password_field :current_password, autocomplete: "current-password", class:"form-control" %>
           </div>
+            <%= f.password_field :current_password, autocomplete: "current-password", class:"form-control" %>
+          
           <% if f.object.errors[:current_password].any? %>
               <div class="text-danger small"><%= f.object.errors.full_messages_for(:current_password).join(", ") %></div>
           <% end %>

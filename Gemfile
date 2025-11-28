@@ -17,7 +17,7 @@ gem "sassc-rails",     "~> 2.1.2"
 gem "sprockets-rails", "~> 3.4.2"
 gem "importmap-rails", "~> 1.1.5"
 gem "turbo-rails",     "~> 1.4.0"
-gem "stimulus-rails",  "~> 1.2.1"
+gem "stimulus-rails",  "~> 1.3.4"
 gem "jbuilder",        "~> 2.14.1"
 gem "puma",            ">= 6.0" #変更Puma 5.x が Rack 3.x と互換性がないため
 gem "bootsnap",        "~> 1.16.0", require: false

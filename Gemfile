@@ -27,6 +27,7 @@ gem "mutex_m"
 gem 'gretel'
 gem "rails-i18n"
 gem "devise-i18n"
+gem 'redcarpet'
 
 group :development, :test do
   gem 'reline', '~> 0.5.10'

@@ -1,7 +1,7 @@
 <!-- app/views/impressions/_form.html.erb -->
 <%= form_with(model: [section.book, section, impression], data: { testid: "impression-form" }) do |f| %>
   <div class="mb-2">
-    <%= f.label :body, "感想", class: "form-label" %>
+    <%= f.label :body, "感想(マークダウン記法で記述)", class: "form-label" %>
     <%= f.text_area :body, rows: 4, class: "form-control", placeholder: "この章を読んで感じたこと…" %>
     <% if impression.errors[:body].any? %>
       <div class="text-danger small"><%= impression.errors.full_messages_for(:body).join(", ") %></div>

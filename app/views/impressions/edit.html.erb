@@ -23,7 +23,7 @@
         <div class="field w-75 mx-auto">
           <div class="d-flex">
             <i class="bi bi-pencil-fill"></i>
-            <%= f.label :body, "感想", class: "form-label" %>
+            <%= f.label :body, "感想(マークダウン記法で記述)", class: "form-label" %>
           </div>
           <%= f.text_area :body, rows: 13, class: "form-control", placeholder: "この章を読んで感じたこと…" %>
           <% if @impression.errors[:body].any? %>

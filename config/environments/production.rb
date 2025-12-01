@@ -59,7 +59,7 @@ Rails.application.configure do
 
   
  # Devise が生成するURLのホスト（あなたの本番FQDNに置換）
-  config.action_mailer.default_url_options = { host: 'YOUR_DOMAIN', protocol: 'https' }
+  config.action_mailer.default_url_options = { host:'booklog-9dsa.onrender.com', protocol: 'https' }
   
  # Postmark を配送に指定（HTTP API）
   config.action_mailer.delivery_method  = :postmark

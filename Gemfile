@@ -28,12 +28,13 @@ gem 'gretel'
 gem "rails-i18n"
 gem "devise-i18n"
 gem 'redcarpet'
+gem 'postmark-rails'  
 
 group :development, :test do
   gem 'reline', '~> 0.5.10'
   gem "debug",   "~> 1.7.1", platforms: %i[ mri mingw x64_mingw ]
   #拡張課題＿RSpecを使ってみる
-  gem 'rspec-rails', '~> 6.0.0' # RSpec本体
+  gem 'rspec-rails', '~> 7.0' # RSpec本体
   gem "sqlite3",         "~> 2.7.4"
 end
 
@@ -42,6 +43,7 @@ group :development do
   gem "solargraph",          "~> 0.53.4"
   #gem "irb",                 "1.10.0"
   gem "repl_type_completor", "~> 0.1.2"
+  gem 'letter_opener_web'
 end
 
 group :test do

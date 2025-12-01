@@ -57,8 +57,18 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
-  # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  
+ # Devise が生成するURLのホスト（あなたの本番FQDNに置換）
+  config.action_mailer.default_url_options = { host:'booklog-9dsa.onrender.com', protocol: 'https' }
+  
+ # Postmark を配送に指定（HTTP API）
+  config.action_mailer.delivery_method  = :postmark
+  config.action_mailer.postmark_settings = { api_token: ENV['POSTMARK_API_TOKEN'] }
+  config.action_mailer.default_options = {
+  from: ENV.fetch('MAIL_FROM_ADDRESS', 'yourname@company.com')
+  }
+
+
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via bin/rails credentials:edit.
   # config.action_mailer.smtp_settings = {

@@ -35,7 +35,7 @@ group :development, :test do
   gem "debug",   "~> 1.7.1", platforms: %i[ mri mingw x64_mingw ]
   #拡張課題＿RSpecを使ってみる
   gem 'rspec-rails', '~> 7.0' # RSpec本体
-  gem "sqlite3",         "~> 2.7.4"
+  gem "sqlite3",         "~> 2.8.1"
 end
 
 group :development do

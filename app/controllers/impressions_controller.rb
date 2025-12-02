@@ -1,5 +1,6 @@
 # app/controllers/impressions_controller.rb
 class ImpressionsController < ApplicationController
+  include MarkdownHelper
   before_action :require_login
   before_action :set_section 
   before_action :set_impression, only: [:edit, :update, :destroy]
@@ -19,6 +20,14 @@ class ImpressionsController < ApplicationController
       flash.now[:alert] = "感想の投稿に失敗しました。"
       render :new, status: :unprocessable_entity
     end
+  end
+
+  
+  def preview
+    body = params[:body].to_s
+    # 既存の helper を使って HTML 化（あなたのXSS対策設定をそのまま適用）
+    html = markdown(body)
+    render json: { html: html }
   end
 
   

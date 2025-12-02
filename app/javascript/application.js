@@ -2,5 +2,6 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import "custom/flash"
+import "./custom/markdown_preview_server"
 import Rails from "@rails/ujs"
 Rails.start()

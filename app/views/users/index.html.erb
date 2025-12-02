@@ -1,39 +1,48 @@
 <% breadcrumb :users %>
 <main class="flex-grow-1 d-flex justify-content-center ">
   <div class="card p-5" style="width: 100%; max-width: 85%;">
-    <h1>ユーザー一覧</h1>
+    <div class=" d-flex justify-content-center">
+      <h1>ユーザー一覧</h1>
+    </div><br><br>
+    <% @users.each do |user| %>
+      <article class="card mb-2 w-75 mx-auto" data-testid="impression-item">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div class="text-muted small ">
+              <%= link_to user.name, user_path(user) %>
+              <% if current_user&.admin?%>
+                <%= link_to "削除",
+                            user_path(user),
+                            data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" },
+                            class: "btn btn-outline-danger btn-sm" %> 
+                <p><br>
+                メールアドレス：
+                <%= user.email %>
+                </p>
+                <p>
+                利用開始日：
+                <%= l user.created_at %>
+                </p>
+                <p>
+                感想投稿数：
+                <%= @impression_counts[user.id] || 0 %>
+                </p>
+              <% else %>                              
+                <p><br>
+                利用開始日：
+                <%= l user.created_at, format: :short %>
+                </p>
+                <p>
+                感想投稿数：
+                <%= @impression_counts[user.id] || 0 %>
+                </p>
+              <% end %>
+             
 
-    <!-- 自分のアカウントへのリンクをページ上部に表示 -->
-    <div style="margin-bottom: 20px;">
-      <strong>あなたのアカウント:</strong>
-      <%= link_to current_user.name, user_path(current_user), class: 'btn btn-outline-primary' %>
-    </div>
-
-    <table>
-      <thead>
-        <tr>
-          <th>名前</th>
-          <th>メールアドレス</th>
-          <% if current_user.admin? %>
-            <th>操作</th>
-          <% end %>
-        </tr>
-      </thead>
-      <tbody>
-        <% @users.each do |user| %>
-          <tr>
-            <td><%= link_to user.name, user_path(user) %></td>
-            <td><%= user.email %></td>
-            <% if current_user.admin? %>
-              <td>
-                <% unless user == current_user %>
-                  <%= link_to '削除', user_path(user), method: :delete, data: { confirm: '本当に削除しますか？' } %>
-                <% end %>
-              </td>
-            <% end %>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+            </div>
+          </div>
+        </div>
+      </article>
+    <% end %>
   </div>
 </main>

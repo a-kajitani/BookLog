@@ -29,7 +29,11 @@ Rails.application.routes.draw do
   
   resources :books do
     resources :sections, only: [:show, :new, :create, :edit, :update, :destroy] do
-      resources :impressions, only: [:new, :create, :edit, :update, :destroy]  
+      resources :impressions, only: [:new, :create, :edit, :update, :destroy] do     
+        collection do
+          post :preview
+        end
+      end
     end
   end
 

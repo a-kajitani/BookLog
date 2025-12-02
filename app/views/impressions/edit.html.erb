@@ -1,48 +1,111 @@
 
-<%# パンくず（1回だけ） %>
 <% if params[:from] == "user" %>
   <% breadcrumb :impression_edit_from_user, @impression %>
 <% else %>
   <% breadcrumb :impression_edit_from_section, @impression %>
 <% end %>
-
-
 <main class="flex-grow-1 d-flex justify-content-center ">
   <div class="card p-5" style="width: 100%; max-width: 85%;">
-    <div class=" mx-auto">
+    <div class="mx-auto">
+      <!-- app/views/impressions/new.html.erb -->
       <h2>感想を編集</h2>
       <p class="text-muted">
-        章：<%= truncate(@section.content.to_s, length: 40) %> ／ 本：<%= @section.book.title %>
+        章：<%= @section.content %> ／ 本：<%= @section.book.title %>
       </p>
-    </div>
-    <div class="d-flex justify-content-center ">
-      <%= form_with model: @impression,
-                    url: book_section_impression_path(@section.book, @section, @impression),
-                    method: :patch, html: {class: "flex-fill  d-flex flex-column h-100 " } do |f| %>
+    </div> <!-- /.mx-auto -->
+
+    <!-- ▼ タブ（Bootstrap 5: data-bs-target に修正） -->
+    <div class="d-flex justify-content-center mb-3">
+      <ul class="nav nav-tabs" id="mdTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="tab-input"
+                  data-bs-toggle="tab" data-bs-target="#pane-input"
+                  type="button" role="tab"
+                  aria-controls="pane-input" aria-selected="true">
+            入力
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="tab-preview"
+                  data-bs-toggle="tab" data-bs-target="#pane-preview"
+                  type="button" role="tab"
+                  aria-controls="pane-preview" aria-selected="false">
+            プレビュー
+          </button>
+        </li>
+      </ul>
+    </div> <!-- /.d-flex (tabs wrapper) -->
+    <!-- ▲ タブ -->
+
+    <div class="d-flex justify-content-center ">   
+    <%= form_with(
+        model: @impression,
+        url: book_section_impression_path(@section.book, @section, @impression),
+        method: :patch,
+        data: {
+          testid: "impression-form",
+          preview_url: preview_book_section_impressions_path(@section.book, @section)  # ← collection
+        },
+        html: { class: "flex-fill" }
+      ) do |f| %>
         <%= hidden_field_tag :return_to, params[:return_to] %>
         <div class="field w-75 mx-auto">
           <div class="d-flex">
             <i class="bi bi-pencil-fill"></i>
             <%= f.label :body, "感想(マークダウン記法で記述)", class: "form-label" %>
-          </div>
-          <%= f.text_area :body, rows: 13, class: "form-control", placeholder: "この章を読んで感じたこと…" %>
-          <% if @impression.errors[:body].any? %>
-            <div class="text-danger small"><%= @impression.errors.full_messages_for(:body).join(", ") %></div>
-          <% end %>
-        </div>
+          </div> <!-- /.d-flex (label row) -->
+
+          <!-- ▼ タブの中身は .tab-content でラップ -->
+          <div class="tab-content">
+            <!-- 入力ペイン -->
+            <div id="pane-input"
+                 class="tab-pane fade show active"
+                 role="tabpanel"
+                 aria-labelledby="tab-input">
+              <%= f.text_area :body,
+                              rows: 13,
+                              class: "form-control",
+                              id: "markdown-input",
+                              placeholder: "この章を読んで感じたこと…" %>
+              <% if @impression.errors[:body].any? %>
+                <div class="text-danger small">
+                  <%= @impression.errors.full_messages_for(:body).join(", ") %>
+                </div>
+              <% end %>
+            </div> <!-- /#pane-input -->
+
+            <!-- プレビューペイン -->
+            <div id="pane-preview"
+                 class="tab-pane fade"
+                 role="tabpanel"
+                 aria-labelledby="tab-preview">
+              <div id="markdown-preview"
+                   class="border rounded p-3 bg-light"
+                   style="min-height: 12rem;">
+                <span class="text-muted">ここにプレビューが表示されます</span>
+              </div>
+            </div> <!-- /#pane-preview -->
+          </div> <!-- /.tab-content -->
+          <!-- ▲ タブ中身 -->
+
+        </div> <!-- /.field -->
+
         <br>
-        <div class="actions actions w-50 mx-auto d-flex justify-content-center gap-2">
-           <%# キャンセルも return_to があればそちらへ。なければ章ページへ %>
+
+        <div class="actions w-50 mx-auto d-flex justify-content-center gap-2">
           <% cancel_path =
               if params[:return_to].present?
                 params[:return_to]
               else
                 polymorphic_path([@section.book, @section])
               end %>
-          <%= link_to "キャンセル", cancel_path, class: "btn btn-secondary  w-25" %>
-          <%= f.submit "更新する", class: "btn btn-primary  w-25" %>            
-        </div>
-      <% end %>
-    </div>
-  </div>
-</main>
+          <%= link_to "キャンセル",cancel_path, class: "btn btn-secondary w-25" %>
+          <%= f.submit "更新する", class: "btn btn-primary w-25" %>
+        </div> <!-- /.actions -->
+
+      <% end %> <!-- /form_with block -->
+    </div> <!-- /.d-flex (form wrapper) -->
+
+  </div> <!-- /.card -->
+</main> <!-- /main -->
+

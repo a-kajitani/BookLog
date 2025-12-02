@@ -15,7 +15,7 @@
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
     <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="icon" href="/book-half.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
@@ -26,11 +26,16 @@
   <body class="d-flex flex-column min-vh-100 bg-light">
     <header>
       <nav class="navbar bg-body-tertiary " data-bs-theme="dark">
-        <div class="container-fluid">        
-            <%= link_to 'BookLog', root_path, class: 'navbar-brand' %>
+        <div class="container-fluid">          
+          <%= link_to root_path, class: 'navbar-brand' do %>
+            <i class="bi bi-book-half"></i>
+            BookLog
+          <% end %>
             <% if user_signed_in? %>
               <div class="d-flex align-items-center ms-auto">
-                <span class="navbar-text me-2"><%= current_user.name %> さん</span>
+                <%= link_to user_path(current_user), class: "navbar-text me-2 text-decoration-none" do %> 
+                  <%= current_user.name %> さん
+                <% end %>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>

@@ -4,7 +4,10 @@ before_action :authenticate_user!
 before_action :authorize_deletion, only: [:destroy]
 
   def index
-    @users = User.all
+    @users = User.all 
+  # user_id => count のハッシュを作成（1クエリで取得）
+    counts = Impression.group(:user_id).count
+    @impression_counts = counts
   end
 
   def show

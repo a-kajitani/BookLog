@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :books, dependent: :nullify
+  has_many :sections, dependent: :nullify
   has_many :impressions, dependent: :nullify
   # Validations
   validates :name, presence: true

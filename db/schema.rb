@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_25_053741) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_05_015153) do
   create_table "books", force: :cascade do |t|
     t.string "author"
     t.datetime "created_at", null: false
@@ -25,7 +25,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_25_053741) do
     t.datetime "created_at", null: false
     t.integer "section_id", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.index ["section_id"], name: "index_impressions_on_section_id"
     t.index ["user_id"], name: "index_impressions_on_user_id"
   end
@@ -36,7 +36,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_25_053741) do
     t.datetime "created_at", null: false
     t.integer "position"
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.index ["book_id", "created_at"], name: "index_sections_on_book_id_and_created_at"
     t.index ["book_id", "position"], name: "index_sections_on_book_id_and_position"
     t.index ["book_id"], name: "index_sections_on_book_id"
@@ -59,7 +59,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_25_053741) do
 
   add_foreign_key "books", "users", on_delete: :nullify
   add_foreign_key "impressions", "sections"
-  add_foreign_key "impressions", "users"
+  add_foreign_key "impressions", "users", on_delete: :nullify
   add_foreign_key "sections", "books"
-  add_foreign_key "sections", "users"
+  add_foreign_key "sections", "users", on_delete: :nullify
 end
